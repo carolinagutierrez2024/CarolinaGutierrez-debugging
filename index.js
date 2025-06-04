@@ -25,13 +25,21 @@ function getRandomNumber(min, max) {
 function checkGuess() {
   // Get value from guess input element
   const guess = parseInt(guessInput.value, 10);
+
+  // To validate input:
+  if (isNaN(guess) || guess < 1 || guess > 99) {
+    alert("Please enter a number between 1 and 99.");
+    guessInput.value = '';
+    return;
+  }
+
   attempts = attempts + 1;
 
   hideAllMessages();
 
   if (guess === targetNumber) {
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You made ${attempts} guesses`;
+    numberOfGuessesMessage.innerHTML = `You made ${attempts} guesses`; //Error here: must use backticks ( `` ) for template literals in JavaScript.
 
     correctMessage.style.display = '';
 
@@ -41,18 +49,19 @@ function checkGuess() {
 
   if (guess !== targetNumber) {
     if (guess < targetNumber) {
-      tooLowMessage.style.display = '';
-    } else {
-      tooLowMessage.style.display = '';
-    }
+  tooLowMessage.style.display = '';
+} else {
+  tooHighMessage.style.display = ''; //Error here; must say too high, not too low again
+}
+
 
     const remainingAttempts = maxNumberOfAttempts - attempts;
 
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
+    numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} ${remainingAttempts === 1 ? 'guess' : 'guesses'} remaining`;
   }
 
-  if (attempts ==== maxNumberOfAttempts) {
+  if (attempts === maxNumberOfAttempts) { //Error here; had an extra =. It should have only 3
     submitButton.disabled = true;
     guessInput.disabled = true;
   }
@@ -62,22 +71,25 @@ function checkGuess() {
   resetButton.style.display = '';
 }
 
-function hideAllMessages() {
-  for (let elementIndex = 0; elementIndex <= messages.length; elementIndex++) {
-    messages[elementIndex].style.display = 'none';
-  }
+function hideAllMessages() { //Error here. too many iterations and it was confusing. Needed to be simplified. Arrays are 0-indexed.
+  for (let i = 0; i < messages.length; i++) {
+  messages[i].style.display = 'none';
 }
 
-funtion setup() {
+}
+
+function setup() { //Error here. funtion is a typo and causes a syntax error.
   // Get random number
   targetNumber = getRandomNumber(1, 100);
-  console.log(`target number: ${targetNumber}`);
+  console.log(`Target number: ${targetNumber}`); //Error here, wrong syntax. Missing the backticks and quote marks for logging
 
   // Reset number of attempts
-  maxNumberOfAttempts = 0;
+attempts = 0; //Error here; maxNumberOfAttempts is a constant. Resetting attempts should modify 'attempts'.
 
   // Enable the input and submit button
-  submitButton.disabeld = false;
+  submitButton.disabled = false; //Error here. Typo in "disabeld". Causes button to remain disabled.
+
+
   guessInput.disabled = false;
 
   hideAllMessages();

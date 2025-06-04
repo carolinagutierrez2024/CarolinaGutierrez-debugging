@@ -61,10 +61,16 @@ function checkGuess() {
     numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} ${remainingAttempts === 1 ? 'guess' : 'guesses'} remaining`;
   }
 
-  if (attempts === maxNumberOfAttempts) { //Error here; had an extra =. It should have only 3
+  if (attempts === maxNumberOfAttempts) {
+    hideAllMessages();
+    
+    maxGuessesMessage.innerHTML = `You reached the max number of guesses. The correct number was ${targetNumber}.`;
+    maxGuessesMessage.style.display = '';
+    
     submitButton.disabled = true;
     guessInput.disabled = true;
   }
+
 
   guessInput.value = '';
 
